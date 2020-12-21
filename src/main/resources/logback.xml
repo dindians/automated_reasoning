@@ -1,0 +1,33 @@
+<configuration>
+    <property name="LOG-DIRECTORY" value="./logs" />
+    <property name="LOG-FILE-NAME" value="automated_reasoning" />
+    <property name="LOG-FILE-EXTENSION" value="log" />
+
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG-DIRECTORY}/${LOG-FILE-NAME}.${LOG-FILE-EXTENSION}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG-DIRECTORY}/${LOG-FILE-NAME}.%d.%i.${LOG-FILE-EXTENSION}</fileNamePattern>
+            <!-- each file should be at most 10MB, keep 30 days worth of history, but at most 10GB -->
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+        <!-- set immediateFlush to false for much higher logging throughput -->
+        <immediateFlush>true</immediateFlush>
+        <encoder>
+            <pattern>%d{ISO8601} %-5level [${HOSTNAME} - %thread] [%C{1.} - %file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--pattern>%d{YYYY-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern-->
+            <pattern>%green(%d{ISO8601}) %highlight(%-5level) [%blue(%thread)] %magenta(%C{1.}): %msg%n%throwable</pattern>
+        </encoder>
+    </appender>
+    <!-- logger levels: case-insensitive string values TRACE, DEBUG, INFO, WARN, ERROR, ALL or OFF. The special case-insensitive value INHERITED, or its synonym NULL, will force the level of the logger to be inherited from higher up in the hierarchy -->
+    <root level="trace">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ROLLING_FILE"/>
+    </root>
+</configuration>
