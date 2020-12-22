@@ -10,6 +10,8 @@ object Versions {
     // note: when the kotlinCompilerJvmTargetVersion value changes, make sure to also change the value in build.gradle.kts in buildSrc module
     // todo find out if it is (still) necessary to set the Kotlin compiler jvm target version (see community_salesforce_apis, where the jvm target version is NOT set)
     const val kotlinCompilerJvmTargetVersion = "11"
+    // https://mvnrepository.com/artifact/org.junit.jupiter
+    const val jUnitJupiterEngine = "5.7.0"
 }
 
 object Dependencies {
@@ -21,4 +23,10 @@ object Dependencies {
     const val org_jetbrains_kotlinx_datetime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:${Versions.kotlinxDatetimeVersion}"
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     const val ch_qos_logback_classic = "ch.qos.logback:logback-classic:${Versions.logbackVersion}"
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test
+    const val org_jetbrains_kotlin_test = "org.jetbrains.kotlin:kotlin-test:${Versions.kotlinVersion}"
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit5
+    const val org_jetbrains_kotlin_test_junit5 = "org.jetbrains.kotlin:kotlin-test-junit5:${Versions.kotlinVersion}"
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+    const val org_junit_jupiter_engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.jUnitJupiterEngine}"
 }

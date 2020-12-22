@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version Versions.kotlinVersion
+    jacoco
     application
 
 }
@@ -41,6 +42,10 @@ dependencies {
     implementation(Dependencies.org_jetbrains_kotlinx_serialization_json)
     implementation(Dependencies.org_jetbrains_kotlinx_datetime)
     implementation(Dependencies.ch_qos_logback_classic)
+
+    testImplementation(Dependencies.org_jetbrains_kotlin_test)
+    testImplementation(Dependencies.org_jetbrains_kotlin_test_junit5)
+    testImplementation(Dependencies.org_junit_jupiter_engine)
 }
 
 val applicationMainClassName = "${project.name}.App"
@@ -57,4 +62,37 @@ val runAppTask = tasks.create<JavaExec>("runApp") {
 
     val workingDirectoryAbsolutePath = workingDir.absolutePath
     args = arrayOf("-Dlogback.configurationFile=$workingDirectoryAbsolutePath\\build\\resources\\main\\logback.xml").toList()
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+    doLast {
+        println("View code coverage at:")
+        println("file://$buildDir\\jacocoHtml\\index.html")
+    }
+    testLogging {
+        showStandardStreams = true
+        showExceptions = true
+        showCauses = true
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = false
+        csv.isEnabled = false
+        html.isEnabled = true
+        html.destination = file("$buildDir/jacocoHtml")
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.95".toBigDecimal()
+            }
+        }
+    }
 }

@@ -1,4 +1,11 @@
 /*
+ * lexical analysis of a string
+ * parses a tokenized string into a list of tokens
+ * recursively extracts a token from the beginning of the string and add the extracted token to the beginning of the token list
+ * tokens are separated by one or more separation characters
+ * the set of separation characters is { ' ', '\t', '\n', '\r' }, i.e. "space", "tab", "newline", and "return"
+ *
+ * each iteration of this function tires to find a new token from the beginning of the string, and add this token to list of tokens found so far.
  * parsing
  * translating concrete into abstract syntax is a transformation that can be separated into two separate stages:
  * - lexical analysis (scanning) decomposes the sequences of input characters into 'tokens' (words)
