@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @DisplayName("test parser")
-internal class TestParse {
+internal class TestParseExpression {
     @Test
     fun `parse 0`() {
         with(parseExpression(mutableListOf("0"))) {
@@ -99,10 +99,10 @@ internal class TestParse {
     }
 
     @Test
-    fun `(parse x + 5)`() {
+    fun `parse (x + 5)`() {
         with(parseExpression(mutableListOf("(", "x", "+", "5", ")"))) {
             println(this)
-            assertTrue { first is Expression.Add }
+            assertTrue("first expression is add") { first is Expression.Add }
             with(first as Expression.Add) {
                 assertEquals(variable("x"), expr1)
                 assertEquals(constant(5), expr2)
@@ -110,7 +110,21 @@ internal class TestParse {
         }
     }
 
-
+    @Test
+    fun `parse 2 x (x + 5)`() {
+        with(parseExpression(mutableListOf("2", "*", "(", "x", "+", "5", ")"))) {
+            println(this)
+            assertTrue("first expression is multiply") { first is Expression.Mul }
+            with(first as Expression.Mul) {
+                assertEquals(constant(2), expr1)
+                assertTrue("second expression is multiply") { expr2 is Expression.Add }
+                with(expr2 as Expression.Add) {
+                    assertEquals(variable("x"), expr1)
+                    assertEquals(constant(5), expr2)
+                }
+            }
+        }
+    }
 
     @Test
     fun `parse random variable + random int`() {
@@ -155,6 +169,4 @@ internal class TestParse {
             }
         }
     }
-
-
 }
