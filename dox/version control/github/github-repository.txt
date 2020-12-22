@@ -1,3 +1,5 @@
 git remote repository
 - for HTTPS: https://github.com/dindians/automated_reasoning.git
 - for SSH: git@github.com:dindians/automated_reasoning.git
+
+https://github.com/dindians/automated_reasoning
