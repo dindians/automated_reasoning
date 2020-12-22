@@ -9,31 +9,40 @@
  * a parser turns a concrete syntax into abstract syntax (e.g. AST, abstract syntax tree)
  * a pretty-printer does the reverse
  */
-tailrec fun lexRec(inp: String, tokens: MutableList<String> = mutableListOf()): MutableList<String>  {
-    val (spaces, inpMinusToken) = lexWhileRec(inp = inp, prop = space)
-    val (head, rest) = headAndRest(inpMinusToken)
+tailrec fun lex(inp: String, tokens: MutableList<String> = mutableListOf()): MutableList<String>  {
+    val (head,rest) = headAndRest(lexWhile(inp = inp, prop = space).second)
+        return when (head) {
+            null -> tokens
+            else -> {
+                val (token, inpMinusToken)  = lexWhile(head.toString(), rest, match(head))
+                lex(inpMinusToken, tokens.apply { add(token) })
+            }
+        }
+
+/*
+    val (head, rest) = headAndRest(lexWhile(inp = inp, prop = space).second)
     return if (head == null) tokens
     else {
-        val prop = head.let {
-            when {
-                alphanumeric(it) -> alphanumeric
-                symbolic(it) -> symbolic
+        val (token, inpMinusToken) = lexWhile(head.toString(), rest, match(head))
+        lex(inpMinusToken, tokens.apply { add(token) })
+    }
+ */
+}
+
+private fun match(value: Char) = when {
+    alphanumeric(value) -> alphanumeric
+    symbolic(value) -> symbolic
 //                    space(it) -> { _ -> false }
 //                    punctuation(it) -> { _ -> false }
 //                    else -> throw Exception("lexical analysis encountered invalid character '$it' after parsing '${tokens.joinToString(",")}'.")
-                else -> { _ -> false }
-            }
-        }
-        val (token, inpMinusToken) = lexWhileRec(head.toString(), rest, prop)
-        lexRec(inpMinusToken, tokens.apply { add(token) })
-    }
+    else -> { _ -> false }
 }
 
-private tailrec fun lexWhileRec(token: String = "", inp: String, prop: (Char) -> Boolean): Pair<String,String> {
+private tailrec fun lexWhile(token: String = "", inp: String, prop: (Char) -> Boolean): Pair<String,String> {
     val (head, rest) = headAndRest(inp)
     return when {
         head == null || !prop(head)-> Pair(token, inp)
-        else -> lexWhileRec(token + head, rest, prop)
+        else -> lexWhile(token + head, rest, prop)
     }
 }
 
