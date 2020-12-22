@@ -11,13 +11,13 @@
  */
 tailrec fun lex(inp: String, tokens: MutableList<String> = mutableListOf()): MutableList<String>  {
     val (head,rest) = headAndRest(lexWhile(inp = inp, prop = space).second)
-        return when (head) {
-            null -> tokens
-            else -> {
-                val (token, inpMinusToken)  = lexWhile(head.toString(), rest, match(head))
-                lex(inpMinusToken, tokens.apply { add(token) })
-            }
+    return when (head) {
+        null -> tokens
+        else -> {
+            val (token, inpMinusToken)  = lexWhile(head.toString(), rest, match(head))
+            lex(inpMinusToken, tokens.apply { add(token) })
         }
+    }
 }
 
 private fun match(value: Char) = when {
