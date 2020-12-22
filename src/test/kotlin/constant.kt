@@ -1,0 +1,1 @@
+internal fun constant(value: Int) = Expression.Const(value)

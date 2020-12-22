@@ -1,0 +1,1 @@
+internal fun variable(value: String) = Expression.Var(value)

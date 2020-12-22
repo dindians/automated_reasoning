@@ -52,7 +52,7 @@ private fun headAndRest(inp: String) = when {
 private val space: (Char) -> Boolean = { " \t\n\r".matches(it) }
 private val punctuation: (Char) -> Boolean = { "()[]{}".matches(it) }
 private val symbolic: (Char) -> Boolean = { "~`!@#$%^&*-+=|\\:;<>.?/".matches(it) }
-private val numeric: (Char) -> Boolean = { "0123456789".matches(it) }
+internal val numeric: (Char) -> Boolean = { "0123456789".matches(it) }
 private val alphanumeric: (Char) -> Boolean = { "abcdefghijklmnopqrstuvwxyz_'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".matches(it) }
 
 private fun String.matches(c: Char) = contains(c)

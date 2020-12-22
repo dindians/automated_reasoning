@@ -4,11 +4,6 @@ import kotlin.test.assertEquals
 
 @DisplayName("test simplify")
 internal class TestSimplify {
-    private fun constant(value: Int) = Expression.Const(value)
-    private fun variable(value: String) = Expression.Var(value)
-    private fun add(expr1: Expression, expr2: Expression) = Expression.Add(expr1, expr2)
-    private fun multiply(expr1: Expression, expr2: Expression) = Expression.Mul(expr1, expr2)
-
     @Test
     fun `simplify 0 + 0`() {
         with(simplify(add(constant(0), constant(0)))) {

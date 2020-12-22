@@ -15,8 +15,8 @@ fun simplify(expr: Expression): Expression = with(expr) {
  * defines a transformation function via pattern-matching and recursion
  * transformation rules are based on the (mathematical) properties of the operands of the expression
  * four mathematical properties that involve addition:
- * - cumulative: a+ b = b + a
- * - associative: (a +b) + c = a + (b + c)
+ * - cumulative: a + b = b + a
+ * - associative: (a + b) + c = a + (b + c)
  * - distributive: a * (b + c) = a * c + b * c
  * - additive identity: a + 0 = a
  *
