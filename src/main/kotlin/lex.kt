@@ -18,15 +18,6 @@ tailrec fun lex(inp: String, tokens: MutableList<String> = mutableListOf()): Mut
                 lex(inpMinusToken, tokens.apply { add(token) })
             }
         }
-
-/*
-    val (head, rest) = headAndRest(lexWhile(inp = inp, prop = space).second)
-    return if (head == null) tokens
-    else {
-        val (token, inpMinusToken) = lexWhile(head.toString(), rest, match(head))
-        lex(inpMinusToken, tokens.apply { add(token) })
-    }
- */
 }
 
 private fun match(value: Char) = when {
