@@ -16,15 +16,20 @@
  * a parser turns a concrete syntax into abstract syntax (e.g. AST, abstract syntax tree)
  * a pretty-printer does the reverse
  */
-tailrec fun lex(inp: String, tokens: MutableList<String> = mutableListOf()): MutableList<String>  {
-    val (head,rest) = headAndRest(lexWhile(inp = inp, prop = space).second)
-    return when (head) {
-        null -> tokens
+tailrec fun lex(inp: String, tokens: MutableList<String> = mutableListOf()): MutableList<String> {
+    val inpMinusSpaces = lexWhile(inp = inp, prop = space).second
+    return when {
+        inpMinusSpaces.isEmpty() -> tokens
         else -> {
-            val (token, inpMinusToken)  = lexWhile(head.toString(), rest, match(head))
+            val (token, inpMinusToken) = inpMinusSpaces[0].let { char -> lexWhile(char.toString(), inpMinusSpaces.drop(1), match(char)) }
             lex(inpMinusToken, tokens.apply { add(token) })
         }
     }
+}
+
+private tailrec fun lexWhile(token: String = "", inp: String, prop: (Char) -> Boolean): Pair<String,String> = when {
+    inp.isEmpty() || !prop(inp[0]) -> Pair(token, inp)
+    else -> lexWhile(token + inp[0], inp.drop(1), prop)
 }
 
 private fun match(value: Char) = when {
@@ -34,19 +39,6 @@ private fun match(value: Char) = when {
 //                    punctuation(it) -> { _ -> false }
 //                    else -> throw Exception("lexical analysis encountered invalid character '$it' after parsing '${tokens.joinToString(",")}'.")
     else -> { _ -> false }
-}
-
-private tailrec fun lexWhile(token: String = "", inp: String, prop: (Char) -> Boolean): Pair<String,String> {
-    val (head, rest) = headAndRest(inp)
-    return when {
-        head == null || !prop(head)-> Pair(token, inp)
-        else -> lexWhile(token + head, rest, prop)
-    }
-}
-
-private fun headAndRest(inp: String) = when {
-    inp.isEmpty() -> Pair(null, inp)
-    else -> Pair(inp[0], inp.drop(1))
 }
 
 private val space: (Char) -> Boolean = { " \t\n\r".matches(it) }
