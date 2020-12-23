@@ -2,6 +2,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 @DisplayName("test parser")
@@ -55,6 +56,37 @@ internal class TestParseExpression {
     }
 
     @Test
+    fun `parse (0)`() {
+        with(parseExpression(mutableListOf("(", "0", ")"))) {
+            println(this)
+            assertEquals(constant(0), this.first)
+        }
+    }
+
+    @Test
+    fun `parse (0`() {
+        assertFailsWith<MissingClosingBracketException> { parseExpression(mutableListOf("(", "0")) }
+    }
+
+    @Test
+    fun `parse 0 +`() {
+        assertFailsWith<MissingTokenException> { parseExpression(mutableListOf("0", "+")) }
+    }
+
+    @Test
+    fun `parse 0 + + 0`() {
+//        assertFailsWith<MissingTokenException> { parseExpression(mutableListOf("0", "+", "+", "0")) }
+    }
+
+    @Test
+    fun `parse ((0))`() {
+        with(parseExpression(mutableListOf("(", "(", "0", ")", ")"))) {
+            println(this)
+            assertEquals(constant(0), this.first)
+        }
+    }
+
+    @Test
     fun `parse 0x_a'2e`() {
         with(parseExpression(mutableListOf("0x_a'2e"))) {
             println(this)
@@ -77,6 +109,42 @@ internal class TestParseExpression {
     @Test
     fun `parse 13 + 27`() {
         with(parseExpression(mutableListOf("13", "+", "27"))) {
+            println(this)
+            assertTrue { first is Expression.Add }
+            with(first as Expression.Add) {
+                assertEquals(constant(13), expr1)
+                assertEquals(constant(27), expr2)
+            }
+        }
+    }
+
+    @Test
+    fun `parse (13 + 27)`() {
+        with(parseExpression(mutableListOf("(", "13", "+", "27", ")"))) {
+            println(this)
+            assertTrue { first is Expression.Add }
+            with(first as Expression.Add) {
+                assertEquals(constant(13), expr1)
+                assertEquals(constant(27), expr2)
+            }
+        }
+    }
+
+    @Test
+    fun `parse (13) + (27)`() {
+        with(parseExpression(mutableListOf("(", "13", ")", "+", "(", "27", ")"))) {
+            println(this)
+            assertTrue { first is Expression.Add }
+            with(first as Expression.Add) {
+                assertEquals(constant(13), expr1)
+                assertEquals(constant(27), expr2)
+            }
+        }
+    }
+
+    @Test
+    fun `parse ((13) + (27)(`() {
+        with(parseExpression(mutableListOf("(", "(", "13", ")", "+", "(", "27", ")", ")"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
