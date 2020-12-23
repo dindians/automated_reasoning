@@ -1,0 +1,3 @@
+jacoco is used for code coverage
+jacoco is configured in the gradle build file build.gradle.kts
+jacoco code coverage can be viewed at the file .\build\jacocoHtml\index.html

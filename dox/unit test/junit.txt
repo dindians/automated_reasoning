@@ -1,0 +1,3 @@
+junit is used for code coverage
+junit is configured in the gradle build file build.gradle.kts
+junit tests can be viewed at the file .\build\reports\tests\test\index.html
