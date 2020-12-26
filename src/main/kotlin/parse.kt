@@ -25,10 +25,10 @@ private fun parseAtom(tokens: List<String>): Pair<Expression, List<String>> {
             Pair(expression, unparsedTokens.drop(1).toMutableList())
         }
         else -> {
-            when(firstToken.all(numeric)) {
-                true -> Pair(Expression.Const(firstToken.toInt()), remainingTokens)
-                else -> Pair(Expression.Var(firstToken), remainingTokens)
-            }
+            Pair(when(firstToken.all(numeric)) {
+                true -> Expression.Const(firstToken.toInt())
+                else -> Expression.Var(firstToken)
+            }, remainingTokens)
         }
     }
 }
