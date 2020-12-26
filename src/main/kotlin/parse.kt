@@ -1,7 +1,7 @@
 internal fun parseExpression(tokens: List<String>): Pair<Expression, List<String>> =
     (parseProduct(tokens)).let { (expression, unparsedTokens) ->
      when {
-        unparsedTokens.isNotEmpty() && unparsedTokens.first() == "+" -> parseExpression(unparsedTokens.drop(1).toMutableList()).let { Pair(Expression.Add(expression, it.first), it.second) }
+        unparsedTokens.isNotEmpty() && unparsedTokens.first() == "+" -> parseExpression(unparsedTokens.drop(1)).let { Pair(Expression.Add(expression, it.first), it.second) }
         else -> Pair(expression, unparsedTokens)
     }
 }
@@ -9,7 +9,7 @@ internal fun parseExpression(tokens: List<String>): Pair<Expression, List<String
 private fun parseProduct(tokens: List<String>): Pair<Expression, List<String>> =
     parseAtom(tokens).let { (expression, unparsedTokens) ->
     when {
-        unparsedTokens.isNotEmpty() && unparsedTokens.first() == "*" -> parseProduct(unparsedTokens.drop(1).toMutableList()).let { Pair(Expression.Mul(expression, it.first), it.second) }
+        unparsedTokens.isNotEmpty() && unparsedTokens.first() == "*" -> parseProduct(unparsedTokens.drop(1)).let { Pair(Expression.Mul(expression, it.first), it.second) }
         else -> Pair(expression, unparsedTokens)
     }
 }
@@ -17,7 +17,7 @@ private fun parseProduct(tokens: List<String>): Pair<Expression, List<String>> =
 private fun parseAtom(tokens: List<String>): Pair<Expression, List<String>> {
     if(tokens.isEmpty()) throw MissingTokenException("Expected an expression at end of input")
     val firstToken = tokens.first()
-    val remainingTokens = tokens.drop(1).toMutableList()
+    val remainingTokens = tokens.drop(1)
     return when (firstToken) {
         "(" -> {
             val (expression, unparsedTokens) = parseExpression(remainingTokens)
