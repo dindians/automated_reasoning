@@ -9,7 +9,7 @@ import kotlin.test.assertTrue
 internal class TestParseExpression {
     @Test
     fun `parse 0`() {
-        with(parseExpression(mutableListOf("0"))) {
+        with(parseExpression(listOf("0"))) {
             println(this)
             assertEquals(constant(0), this.first)
         }
@@ -17,7 +17,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 00`() {
-        with(parseExpression(mutableListOf("00"))) {
+        with(parseExpression(listOf("00"))) {
             println(this)
             assertEquals(constant(0), this.first)
         }
@@ -25,7 +25,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 01`() {
-        with(parseExpression(mutableListOf("01"))) {
+        with(parseExpression(listOf("01"))) {
             println(this)
             assertEquals(constant(1), this.first)
         }
@@ -33,7 +33,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 234`() {
-        with(parseExpression(mutableListOf("234"))) {
+        with(parseExpression(listOf("234"))) {
             println(this)
             assertEquals(constant(234), this.first)
         }
@@ -41,7 +41,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse x`() {
-        with(parseExpression(mutableListOf("x"))) {
+        with(parseExpression(listOf("x"))) {
             println(this)
             assertEquals(variable("x"), this.first)
         }
@@ -49,7 +49,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse xyz`() {
-        with(parseExpression(mutableListOf("xyz"))) {
+        with(parseExpression(listOf("xyz"))) {
             println(this)
             assertEquals(variable("xyz"), this.first)
         }
@@ -57,7 +57,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse (0)`() {
-        with(parseExpression(mutableListOf("(", "0", ")"))) {
+        with(parseExpression(listOf("(", "0", ")"))) {
             println(this)
             assertEquals(constant(0), this.first)
         }
@@ -65,22 +65,22 @@ internal class TestParseExpression {
 
     @Test
     fun `parse (0`() {
-        assertFailsWith<MissingClosingBracketException> { parseExpression(mutableListOf("(", "0")) }
+        assertFailsWith<MissingClosingBracketException> { parseExpression(listOf("(", "0")) }
     }
 
     @Test
     fun `parse 0 +`() {
-        assertFailsWith<MissingTokenException> { parseExpression(mutableListOf("0", "+")) }
+        assertFailsWith<MissingTokenException> { parseExpression(listOf("0", "+")) }
     }
 
     @Test
     fun `parse 0 + + 0`() {
-//        assertFailsWith<MissingTokenException> { parseExpression(mutableListOf("0", "+", "+", "0")) }
+//        assertFailsWith<MissingTokenException> { parseExpression(listOf("0", "+", "+", "0")) }
     }
 
     @Test
     fun `parse ((0))`() {
-        with(parseExpression(mutableListOf("(", "(", "0", ")", ")"))) {
+        with(parseExpression(listOf("(", "(", "0", ")", ")"))) {
             println(this)
             assertEquals(constant(0), this.first)
         }
@@ -88,7 +88,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 0x_a'2e`() {
-        with(parseExpression(mutableListOf("0x_a'2e"))) {
+        with(parseExpression(listOf("0x_a'2e"))) {
             println(this)
             assertEquals(variable("0x_a'2e"), this.first)
         }
@@ -96,7 +96,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 0 + 0`() {
-        with(parseExpression(mutableListOf("0", "+", "0"))) {
+        with(parseExpression(listOf("0", "+", "0"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -108,7 +108,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 13 + 27`() {
-        with(parseExpression(mutableListOf("13", "+", "27"))) {
+        with(parseExpression(listOf("13", "+", "27"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -120,7 +120,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse (13 + 27)`() {
-        with(parseExpression(mutableListOf("(", "13", "+", "27", ")"))) {
+        with(parseExpression(listOf("(", "13", "+", "27", ")"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -132,7 +132,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse (13) + (27)`() {
-        with(parseExpression(mutableListOf("(", "13", ")", "+", "(", "27", ")"))) {
+        with(parseExpression(listOf("(", "13", ")", "+", "(", "27", ")"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -144,7 +144,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse ((13) + (27)(`() {
-        with(parseExpression(mutableListOf("(", "(", "13", ")", "+", "(", "27", ")", ")"))) {
+        with(parseExpression(listOf("(", "(", "13", ")", "+", "(", "27", ")", ")"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -156,7 +156,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse x + 5`() {
-        with(parseExpression(mutableListOf("x", "+", "5"))) {
+        with(parseExpression(listOf("x", "+", "5"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -168,7 +168,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse (x + 5)`() {
-        with(parseExpression(mutableListOf("(", "x", "+", "5", ")"))) {
+        with(parseExpression(listOf("(", "x", "+", "5", ")"))) {
             println(this)
             assertTrue("first expression is add") { first is Expression.Add }
             with(first as Expression.Add) {
@@ -180,7 +180,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 2 x (x + 5)`() {
-        with(parseExpression(mutableListOf("2", "*", "(", "x", "+", "5", ")"))) {
+        with(parseExpression(listOf("2", "*", "(", "x", "+", "5", ")"))) {
             println(this)
             assertTrue("first expression is multiply") { first is Expression.Mul }
             with(first as Expression.Mul) {
@@ -198,7 +198,7 @@ internal class TestParseExpression {
     fun `parse random variable + random int`() {
         val randomVariable = randomAlphanumericString(5)
         val randomInt = Random.nextInt(0, 4)
-        with(parseExpression(mutableListOf(randomVariable, "+", randomInt.toString()))) {
+        with(parseExpression(listOf(randomVariable, "+", randomInt.toString()))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
@@ -212,7 +212,7 @@ internal class TestParseExpression {
     fun `parse random x times random int`() {
         val randomVariable = randomAlphanumericString(5)
         val randomInt = Random.nextInt(0, 4)
-        with(parseExpression(mutableListOf(randomVariable, "*", randomInt.toString()))) {
+        with(parseExpression(listOf(randomVariable, "*", randomInt.toString()))) {
             println(this)
             assertTrue { first is Expression.Mul }
             with(first as Expression.Mul) {
@@ -224,7 +224,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 36 + 4 + 73`() {
-        with(parseExpression(mutableListOf("36", "+", "4", "+", "73"))) {
+        with(parseExpression(listOf("36", "+", "4", "+", "73"))) {
             println(this)
             assertTrue { first is Expression.Add }
             with(first as Expression.Add) {
