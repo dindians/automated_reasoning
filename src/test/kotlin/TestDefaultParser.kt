@@ -111,13 +111,45 @@ internal class TestDefaultParser {
     }
 
     @Test
+    fun `parse (x + y) + z`() {
+        with(defaultParser()("(x + y) + z")) {
+            println(this)
+            assertTrue("first expression is add") { this is Expression.Add }
+            with(this as Expression.Add) {
+                assertTrue("second expression is add") { expr1 is Expression.Add }
+                with(expr1 as Expression.Add) {
+                    assertEquals(variable("x"), expr1)
+                    assertEquals(variable("y"), expr2)
+                }
+                assertEquals(variable("z"), expr2)
+            }
+        }
+    }
+
+    @Test
+    fun `parse x + _y + z_`() {
+        with(defaultParser()("x + (y + z)")) {
+            println(this)
+            assertTrue("first expression is add") { this is Expression.Add }
+            with(this as Expression.Add) {
+                assertEquals(variable("x"), expr1)
+                assertTrue("second expression is add") { expr2 is Expression.Add }
+                with(expr2 as Expression.Add) {
+                    assertEquals(variable("y"), expr1)
+                    assertEquals(variable("z"), expr2)
+                }
+            }
+        }
+    }
+
+    @Test
     fun `parse 2 x (x + 5)`() {
         with(defaultParser()("2 * (x + 5)")) {
             println(this)
             assertTrue("first expression is multiply") { this is Expression.Mul }
             with(this as Expression.Mul) {
                 assertEquals(constant(2), expr1)
-                assertTrue("second expression is multiply") { expr2 is Expression.Add }
+                assertTrue("second expression is add") { expr2 is Expression.Add }
                 with(expr2 as Expression.Add) {
                     assertEquals(variable("x"), expr1)
                     assertEquals(constant(5), expr2)
@@ -160,12 +192,12 @@ internal class TestDefaultParser {
             println(this)
             assertTrue { this is Expression.Add }
             with(this as Expression.Add) {
-                assertEquals(constant(36), expr1)
-                assertTrue { expr2 is Expression.Add }
-                with(expr2 as Expression.Add) {
-                    assertEquals(constant(4), expr1)
-                    assertEquals(constant(73), expr2)
+                assertTrue { expr1 is Expression.Add }
+                with(expr1 as Expression.Add) {
+                    assertEquals(constant(36), expr1)
+                    assertEquals(constant(4), expr2)
                 }
+                assertEquals(constant(73), expr2)
             }
         }
     }
