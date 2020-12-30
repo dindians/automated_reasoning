@@ -22,7 +22,7 @@ private fun parseAtom(tokens: List<String>): Pair<Expression, List<String>> {
         "(" -> {
             val (expression, unparsedTokens) = parseExpressionTailrec(remainingTokens)
             if(unparsedTokens.firstOrNull() != ")") throw MissingClosingBracketException("Expected closing bracket (actual: ${unparsedTokens.firstOrNull()})")
-            Pair(expression, unparsedTokens.drop(1).toMutableList())
+            Pair(expression, unparsedTokens.drop(1).toList())
         }
         else -> {
             Pair(when(firstToken.all(numeric)) {
