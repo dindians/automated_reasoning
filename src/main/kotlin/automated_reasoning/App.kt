@@ -1,4 +1,4 @@
-package app
+package automated_reasoning
 
 import org.slf4j.LoggerFactory
 

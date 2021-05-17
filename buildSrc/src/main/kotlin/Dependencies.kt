@@ -1,10 +1,10 @@
 object Versions {
     // https://mvnrepository.com/artifact/org.jetbrains.kotlin
-    const val kotlinVersion = "1.4.20"
+    const val kotlinVersion = "1.5.0"
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx
-    const val kotlinxCoroutinesVersion = "1.4.2"
-    const val kotlinxSerializationVersion = "1.0.1"
-    const val kotlinxDatetimeVersion = "0.1.1"
+    const val kotlinxCoroutinesVersion = "1.5.0"
+    const val kotlinxSerializationVersion = "1.2.1"
+    const val kotlinxDatetimeVersion = "0.2.0"
     // https://mvnrepository.com/artifact/ch.qos.logback
     const val logbackVersion = "1.2.3"
     // note: when the kotlinCompilerJvmTargetVersion value changes, make sure to also change the value in build.gradle.kts in buildSrc module
@@ -20,6 +20,7 @@ object Dependencies {
     const val org_jetbrains_kotlinx_coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinxCoroutinesVersion}"
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json
     const val org_jetbrains_kotlinx_serialization_json = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinxSerializationVersion}"
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-datetime-jvm
     const val org_jetbrains_kotlinx_datetime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:${Versions.kotlinxDatetimeVersion}"
     // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
     const val ch_qos_logback_classic = "ch.qos.logback:logback-classic:${Versions.logbackVersion}"

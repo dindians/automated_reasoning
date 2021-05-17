@@ -1,6 +1,7 @@
 import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.version
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
     kotlin("jvm") version Versions.kotlinVersion
@@ -14,14 +15,11 @@ allprojects {
     version = ApplicationSettings.version
 
     repositories {
-        jcenter()
         mavenCentral()
         // https://kotlin.bintray.com = https://dl.bintray.com/kotlin
         maven { setUrl("https://kotlin.bintray.com/kotlinx") }
     }
-}
 
-allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = Versions.kotlinCompilerJvmTargetVersion
@@ -51,7 +49,7 @@ dependencies {
 val applicationMainClassName = "${project.name}.App"
 
 application {
-    mainClassName = applicationMainClassName
+    mainClass.set(applicationMainClassName)
 }
 
 val runAppTask = tasks.create<JavaExec>("runApp") {
@@ -64,14 +62,21 @@ val runAppTask = tasks.create<JavaExec>("runApp") {
     args = arrayOf("-Dlogback.configurationFile=$workingDirectoryAbsolutePath\\build\\resources\\main\\logback.xml").toList()
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform()
+    jacoco {
+        // https://www.jacoco.org/jacoco/trunk/doc/changes.html
+        toolVersion = "0.8.7"
+    }
     finalizedBy(tasks.jacocoTestReport)
     doLast {
         println("View code coverage at:")
         println("file://$buildDir\\jacocoHtml\\index.html")
     }
     testLogging {
+        // log all test events
+        events = TestLogEvent.values().toSet()
+        // show standard out and standard error of the test JVM(s) on the console
         showStandardStreams = true
         showExceptions = true
         showCauses = true

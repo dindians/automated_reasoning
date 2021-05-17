@@ -1,4 +1,4 @@
-package app
+package automated_reasoning
 
 import kotlin.reflect.KClass
 
