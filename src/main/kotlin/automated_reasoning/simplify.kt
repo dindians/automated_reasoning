@@ -1,7 +1,9 @@
+package automated_reasoning
+
 /**
- * symbolic computation: apply specified transformation rules to simplify an expression
+ * automated_reasoning.symbolic computation: apply specified transformation rules to automated_reasoning.simplify an expression
  *  since expressions are recursive, transformation rules are applied repeatedly until no further progress is possible
- *  Simple recursive bottom-up sweep that will simplify in a cascaded manner
+ *  Simple recursive bottom-up sweep that will automated_reasoning.simplify in a cascaded manner
  */
 fun simplify(expr: Expression): Expression = with(expr) {
     when(this) {

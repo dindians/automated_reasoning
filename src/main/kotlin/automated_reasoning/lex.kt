@@ -1,9 +1,9 @@
-/*
+package automated_reasoning/*
  * lexical analysis of a string
  * parses a tokenized string into a list of tokens
  * recursively extracts a token from the beginning of the string and add the extracted token to the beginning of the token list
  * tokens are separated by one or more separation characters
- * the set of separation characters is { ' ', '\t', '\n', '\r' }, i.e. "space", "tab", "newline", and "return"
+ * the set of separation characters is { ' ', '\t', '\n', '\r' }, i.e. "automated_reasoning.space", "tab", "newline", and "return"
  *
  * each iteration of this function tires to find a new token from the beginning of the string, and add this token to list of tokens found so far.
  * parsing
@@ -35,8 +35,8 @@ private tailrec fun lexWhile(token: String = "", inp: String, prop: (Char) -> Bo
 private fun match(value: Char) = when {
     alphanumeric(value) -> alphanumeric
     symbolic(value) -> symbolic
-//                    space(it) -> { _ -> false }
-//                    punctuation(it) -> { _ -> false }
+//                    automated_reasoning.space(it) -> { _ -> false }
+//                    automated_reasoning.punctuation(it) -> { _ -> false }
 //                    else -> throw Exception("lexical analysis encountered invalid character '$it' after parsing '${tokens.joinToString(",")}'.")
     else -> { _ -> false }
 }

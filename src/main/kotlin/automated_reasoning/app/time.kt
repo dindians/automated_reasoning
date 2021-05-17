@@ -1,4 +1,4 @@
-package automated_reasoning
+package automated_reasoning.app
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.LocalDateTime

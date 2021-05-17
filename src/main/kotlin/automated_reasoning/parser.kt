@@ -1,3 +1,5 @@
+package automated_reasoning
+
 fun makeParser(lex: (String) -> List<String>, parse: (List<String>) -> Pair<Expression, List<String>>) =
     { sequence:String ->
         parse(lex(sequence)).let {

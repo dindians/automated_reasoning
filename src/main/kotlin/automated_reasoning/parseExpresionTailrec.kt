@@ -1,3 +1,5 @@
+package automated_reasoning
+
 internal tailrec fun parseExpressionTailrec(tokens: List<String>, accumulateExpression: (Expression) -> Expression = { it }): Pair<Expression, List<String>> {
     val (expression, unparsedTokens) = parseProduct(tokens, accumulateExpression)
     return when {

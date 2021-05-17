@@ -1,3 +1,5 @@
+import automated_reasoning.defaultParser
+import automated_reasoning.prettyPrint
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

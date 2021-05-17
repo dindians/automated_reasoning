@@ -1,3 +1,4 @@
+import automated_reasoning.lex
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -39,7 +40,7 @@ internal class TestLex {
     @Test
     fun `analyze random alphanumeric word`() {
         with(randomAlphanumericString(10)) {
-            println("analyzing random alphanumeric word [$this]")
+            println("analyzing random automated_reasoning.alphanumeric word [$this]")
             lex(this).also {
                 assertEquals(1, it.size)
                 assertEquals(this, it[0])
@@ -51,7 +52,7 @@ internal class TestLex {
     fun `analyze random word + spaces + punctuation and symbolic chars`() {
         val randomWord = randomAlphanumericString(10)
         with(randomSpaces(4) + randomWord + " + ( 6 - 4 ) + { ab cd }   ") {
-            println("analyzing random alphanumeric word [$this]")
+            println("analyzing random automated_reasoning.alphanumeric word [$this]")
             lex(this).also {
                 assertEquals(12, it.size)
                 assertEquals(randomWord, it[0])

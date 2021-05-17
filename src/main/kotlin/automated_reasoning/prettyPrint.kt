@@ -1,3 +1,5 @@
+package automated_reasoning
+
 fun prettyPrint(expression: Expression, precedenceLevel: Int = 0): String = when(expression) {
     is Expression.Var -> expression.value
     is Expression.Const -> expression.value.toString()

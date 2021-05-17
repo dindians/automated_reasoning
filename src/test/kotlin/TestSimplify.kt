@@ -1,8 +1,9 @@
+import automated_reasoning.simplify
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-@DisplayName("test simplify")
+@DisplayName("test automated_reasoning.simplify")
 internal class TestSimplify {
     @Test
     fun `simplify 0 + 0`() {

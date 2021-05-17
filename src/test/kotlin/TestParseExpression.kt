@@ -1,3 +1,7 @@
+import automated_reasoning.Expression
+import automated_reasoning.MissingClosingBracketException
+import automated_reasoning.MissingTokenException
+import automated_reasoning.parseExpression
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
@@ -82,7 +86,7 @@ internal class TestParseExpression {
 
     @Test
     fun `parse 0 + + 0`() {
-//        assertFailsWith<MissingTokenException> { parseExpression(listOf("0", "+", "+", "0")) }
+//        assertFailsWith<automated_reasoning.MissingTokenException> { automated_reasoning.parseExpression(listOf("0", "+", "+", "0")) }
     }
 
     @Test

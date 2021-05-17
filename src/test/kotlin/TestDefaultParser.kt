@@ -1,3 +1,5 @@
+import automated_reasoning.Expression
+import automated_reasoning.defaultParser
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import kotlin.random.Random
