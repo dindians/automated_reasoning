@@ -41,9 +41,8 @@ dependencies {
     implementation(Dependencies.org_jetbrains_kotlinx_datetime)
     implementation(Dependencies.ch_qos_logback_classic)
 
-    testImplementation(Dependencies.org_jetbrains_kotlin_test)
-    testImplementation(Dependencies.org_jetbrains_kotlin_test_junit5)
-    testImplementation(Dependencies.org_junit_jupiter_engine)
+    testImplementation(platform(Dependencies.org_junit_bom))
+    testImplementation(Dependencies.org_junit_jupiter)
 }
 
 val applicationMainClassName = "${project.name}.App"
@@ -66,12 +65,12 @@ tasks.test {
     useJUnitPlatform()
     jacoco {
         // https://www.jacoco.org/jacoco/trunk/doc/changes.html
-        toolVersion = "0.8.7"
+        toolVersion = Versions.jacocoToolVersion
     }
     finalizedBy(tasks.jacocoTestReport)
     doLast {
-        println("View code coverage at:")
-        println("file://$buildDir\\jacocoHtml\\index.html")
+        println("Test summary can be found a file://$buildDir/reports/tests/test/index.html")
+        println("Code coverage can be found at file://$buildDir/jacocoHtml/index.html")
     }
     testLogging {
         // log all test events

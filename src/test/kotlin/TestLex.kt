@@ -1,52 +1,42 @@
 import automated_reasoning.lex
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.*
 
-@DisplayName("test lexical analysis")
+@DisplayName("lexical analysis")
 internal class TestLex {
     @Test
-    fun `analyze empty string`() {
-        with(lex("")) {
+    fun `analyze empty string`() = with(lex("")) {
             assertEquals(0, size)
         }
-    }
 
     @Test
-    fun `analyze random spaces`() {
-        with(randomSpaces(10)) {
+    fun `analyze random spaces`() = with(randomSpaces(10)) {
             println("analyzing random spaces [$this]")
             assertEquals(0, lex(this).size)
         }
-    }
 
     @Test
-    fun `analyze 1`() {
-        with(lex("1")) {
+    fun `analyze 1`() = with(lex("1")) {
             assertEquals(1, size)
             assertEquals("1", this[0])
         }
-    }
 
     @Test
-    fun `analyze 1 2`() {
-        with(lex("1 2")) {
+    fun `analyze 1 2`() = with(lex("1 2")) {
             assertEquals(2, size)
             assertEquals("1", this[0])
             assertEquals("2", this[1])
         }
-    }
 
     @Test
-    fun `analyze random alphanumeric word`() {
-        with(randomAlphanumericString(10)) {
+    fun `analyze random alphanumeric word`() = with(randomAlphanumericString(10)) {
             println("analyzing random automated_reasoning.alphanumeric word [$this]")
-            lex(this).also {
+            lex(this).let {
                 assertEquals(1, it.size)
                 assertEquals(this, it[0])
             }
         }
-    }
 
     @Test
     fun `analyze random word + spaces + punctuation and symbolic chars`() {

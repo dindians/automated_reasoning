@@ -1,5 +1,8 @@
 package automated_reasoning
 
+/**
+ * this function is an alternative function for the tail-recursive function [parseExpressionTailrec]
+ */
 internal fun parseExpressionNormal(tokens: List<String>): Pair<Expression, List<String>> =
     (parseProduct(tokens)).let { (expression, unparsedTokens) ->
         when {
