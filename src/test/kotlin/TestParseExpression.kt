@@ -76,7 +76,7 @@ internal class TestParseExpression {
     }
 
     @Test
-    fun `parse __0))`() = with(parseExpression(listOf("(", "(", "0", ")", ")"))) {
+    fun `parse 0))`() = with(parseExpression(listOf("(", "(", "0", ")", ")"))) {
             println(this)
             assertTrue(second.isEmpty()) { "remaining tokens is empty" }
             assertEquals(constant(0), this.first)
